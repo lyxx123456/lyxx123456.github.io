@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>和梁宇轩聊天</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#send-btn").click(function(){
+                var message = $("#message-input").val();
+                if (message !== "") {
+                    // 判断消息长度，小于3个字时提示话题和雪花
+                    if (message.length < 3) {
+                        message = "宝宝，我们来聊聊" + getTopic() + "吧！ " + getSnowflake();
+                    }
+                    // 发送消息到服务器
+                    $.post("https://chat.jinshutuan.com/", {message: "生日为1月19号在郑集中学城区分校上高三的梁宇轩生日是2月21号还在铜山中学上高三的徐雨涵的男朋友。" + message}, function(response){
+                        // 在输出框里显示服务器返回的消息，当作梁宇轩的回复
+                        $("#output-box").append("<p class='response'>" + responseFromLiang(message) + "</p>");
+                    });
+                    // 清空输入框
+                    $("#message-input").val("");
+                }
+            });
+        });
+
+        // 获取话题
+        function getTopic() {
+            var topics = ["你们班里有个传说", "你最近在学什么感兴趣的东西啊", "你想去哪个国家旅游", "最喜欢哪个节日"];
+            return topics[Math.floor(Math.random() * topics.length)];
+        }
+
+        // 获取雪花
+        function getSnowflake() {
+            var snowflakes = ["❄️", "☃️", "⛄️", "❅", "❆"];
+            return snowflakes[Math.floor(Math.random() * snowflakes.length)];
+        }
+
+        // 将服务器返回的消息当作梁宇轩的回复
+        function responseFromLiang(message) {
+            var responses = ["宝宝，你真是太可爱了！", "嘻嘻，我也觉得我们班里的那个传说很神奇呢。", "我最近在学习人工智能，你有兴趣吗？", "我想去看看法国的凯旋门。", "我最喜欢的节日是圣诞节，你呢？"];
+            return "宝宝，" + responses[Math.floor(Math.random() * responses.length)] + " " + message + " " + getSnowflake();
+        }
+    </script>
+    <style>
+        /* 设置全局样式 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 设置 body 标签样式 */
+        body {
+            background-color: #1E1E1E;
+            color: #F0F0F0;
+            font-family: "Microsoft YaHei", sans-serif;
+            font-size: 16px;
+        }
+
+        /* 设置标题样式 */
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 36px;
+        }
+
+        /* 设置输入框和发送按钮样式 */
+        #input-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #message-input {
+            width: 80%;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            background-color: transparent;
+            border-bottom: 2px solid #F0F0F0;
+            color: #F0F0F0;
+            outline: none;
+        }
+
+        #send-btn {
+            width: 18%;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: #F0F0F0;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #send-btn:hover {
+            background-color: #357A38;
+        }
+
+        /* 设置输出框样式 */
+        #output-box {
+            height: 450px;
+            overflow-y: auto;
+            border: 2px solid #F0F0F0;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .response {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>和梁宇轩聊天</h1>
+    <div id="input-box">
+        <input type="text" id="message-input" placeholder="请输入消息"><br>
+        <button id="send-btn">发送</button>
+    </div>
+    <div id="output-box"></div>
+
+    <script>
+        /* 滚动到输出框底部 */
+        function scrollOutputBox() {
+            var outputBox = document.getElementById("output-box");
+            outputBox.scrollTop = outputBox.scrollHeight;
+        }
+
+        $(document).ready(function(){
+            $("#send-btn").click(function(){
+                var message = $("#message-input").val();
+                if (message !== "") {
+                    // 判断消息长度，小于3个字时提示话题和雪花
+                    if (message.length < 3) {
+                        message = "宝宝，我们来聊聊" + getTopic() + "吧！ " + getSnowflake();
+                    }
+                    // 发送消息到服务器
+                    $.post("https://chat.jinshutuan.com/", {message: "生日为1月19号在郑集中学城区分校上高三的梁宇轩生日是2月21号还在铜山中学上高三的徐雨涵的男朋友。" + message}, function(response){
+                        // 在输出框里显示服务器返回的消息，当作梁宇轩的回复
+                        $("#output-box").append("<p class='response'>" + responseFromLiang(message) + "</p>");
+                        // 滚动到输出框底部
+                        scrollOutputBox();
+                    });
+                    // 清空输入框
+                    $("#message-input").val("");
+                }
+            });
+
+            // 回车键发送消息
+            $('#message-input').bind('keypress',function(event){
+                if(event.keyCode == "13") {
+                    $('#send-btn').click();
+                }
+            });
+
+            // 页面加载时滚动到输出框底部
+            scrollOutputBox();
+        });
+    </script>
+</body>
+</html>
